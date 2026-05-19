@@ -71,8 +71,6 @@ class Nano_OWL_Subscriber(Node):
 
     def listener_callback(self, data):
         input_query = self.query
-        if input_query.strip() == "":
-            return
         input_model = self.get_parameter('model').get_parameter_value().string_value
         input_image_encoder_engine = self.get_parameter('image_encoder_engine').get_parameter_value().string_value
         thresholds = self.get_parameter('thresholds').get_parameter_value().double_value
