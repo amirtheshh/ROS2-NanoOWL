@@ -45,7 +45,7 @@ class Nano_OWL_Subscriber(Node):
         # Subscriber for input image
         self.image_subscription = self.create_subscription(
             Image,
-            'input_image',
+            '/camera/camera/color/image_raw',
             self.listener_callback,
             10)
         self.image_subscription  # prevent unused variable warning
@@ -63,7 +63,7 @@ class Nano_OWL_Subscriber(Node):
          image_encoder_engine=self.image_encoder_engine
         )
 
-        self.query = "a person, a box"
+        self.query = ""
 
     def query_listener_callback(self, msg):
         self.query = msg.data
@@ -71,6 +71,8 @@ class Nano_OWL_Subscriber(Node):
 
     def listener_callback(self, data):
         input_query = self.query
+        if input_query.strip() == "":
+            return
         input_model = self.get_parameter('model').get_parameter_value().string_value
         input_image_encoder_engine = self.get_parameter('image_encoder_engine').get_parameter_value().string_value
         thresholds = self.get_parameter('thresholds').get_parameter_value().double_value
